@@ -1,0 +1,31 @@
+09-06-2023
+
+Código ok, base incluir e alterar !
+
+Implementando a logo e adição na tabela da logo
+
+---------------------------------------------------
+09-06-2023 - 2ºetapa
+
+Logo implementado juntamente com a url na tabela, falta a logo aparecer na tabela !
+
+A url aparece no banco de dados !
+
+Alterar URL -ok, Vê se a imagem já foi cadastrada anteriormente -ok
+
+Obs: Falta realizar, não deixar o usuário cadastrar com campos vazios !
+
+-----------------------------------------------------
+
+12-06-2023 - 3ºetapa
+
+Modelo encontra-se parcial
+
+está cadastrando no banco de dados e puxando as marcas do banco
+
+falta criar a tabela automatico
+
+regras de sql no código !
+
+está fazendo um alterar parcial, modelo e url 
+ao fazer o alterar ele atualiza.
