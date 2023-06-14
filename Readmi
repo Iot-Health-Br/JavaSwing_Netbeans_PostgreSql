@@ -23,9 +23,18 @@ Modelo encontra-se parcial
 
 está cadastrando no banco de dados e puxando as marcas do banco
 
-falta criar a tabela automatico
+tabela automatico - ok
 
 regras de sql no código !
 
-está fazendo um alterar parcial, modelo e url 
-ao fazer o alterar ele atualiza.
+alterar modelo, url e marca
+
+-----------------------------------------------------
+
+14-06-2023 - 4ºetapa
+
+Inclui na tabela
+Altera Marca e Modelo
+Regra de Modelo duplicado
+
+Obs: Falta Veiculo
