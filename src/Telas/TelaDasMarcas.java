@@ -31,6 +31,13 @@ public class TelaDasMarcas extends javax.swing.JFrame {
     public TelaDasMarcas() {
         initComponents();
         
+        // INICIA MAXIMIZADA
+        setExtendedState(TelaDasMarcas.MAXIMIZED_BOTH);
+        
+        // SETA VAZIO NOS CAMPOS DE TEXTO
+        Txt_Marca.setText("");
+        Txt_URL.setText("");
+        
         // Inicia a Tabela tabelaMarcas atualizada.
         IMarcaDao marcaDao = new MarcaDao();
         DefaultTableModel tableModel = (DefaultTableModel) tabelaMarcas.getModel();
@@ -79,17 +86,17 @@ public class TelaDasMarcas extends javax.swing.JFrame {
 
         tabelaMarcas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
             },
             new String [] {
-                "id", "Marca", "URL", "Logo"
+                "id", "Marca", "URL"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -282,6 +289,7 @@ public class TelaDasMarcas extends javax.swing.JFrame {
 
     private void Btn_AddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_AddActionPerformed
         try {
+            Txt_Marca.setText("");
             JFileChooser fc = new JFileChooser();
             fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
             // Abre no diretorio especifico
@@ -301,24 +309,34 @@ public class TelaDasMarcas extends javax.swing.JFrame {
     }//GEN-LAST:event_Btn_AddActionPerformed
 
     private void Btn_AlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_AlterarActionPerformed
-        String nomeMarca = Txt_Marca.getText(); // Supondo que jTextFieldNomeMarca seja o campo de entrada para o nome da marca
-        String url = Txt_URL.getText();
-
-        int selectedRow = tabelaMarcas.getSelectedRow();
-        if (selectedRow != -1) {
-            int idMarca = (int) tabelaMarcas.getValueAt(selectedRow, 0);
-            IMarcaControle atualiza = new MarcaControle(new MarcaDao(), (DefaultTableModel) tabelaMarcas.getModel());
-            atualiza.atualizarMarca(idMarca, nomeMarca, url );
+        if(!Txt_Marca.getText().equals("")||!Txt_URL.getText().equals("")){
+            String nomeMarca = Txt_Marca.getText().toUpperCase(); // Supondo que jTextFieldNomeMarca seja o campo de entrada para o nome da marca
+            String url = Txt_URL.getText();
+            
+            int selectedRow = tabelaMarcas.getSelectedRow();
+                if (selectedRow != -1) {
+                    int idMarca = (int) tabelaMarcas.getValueAt(selectedRow, 0);
+                    IMarcaControle atualiza = new MarcaControle(new MarcaDao(), (DefaultTableModel) tabelaMarcas.getModel());
+                    atualiza.atualizarMarca(idMarca, nomeMarca, url );
+                }
+        }        
+        else{
+            JOptionPane.showMessageDialog(null, "Campos vazios !");
         }
     }//GEN-LAST:event_Btn_AlterarActionPerformed
 
     private void Btn_IncluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_IncluirActionPerformed
-        String nomeMarca = Txt_Marca.getText(); // Supondo que jTextFieldNomeMarca seja o campo de entrada para o nome da marca
-        String nomeurl = Txt_URL.getText(); // Supondo que jTextFieldNomeMarca seja o campo de entrada para o nome da marca
+        if((!Txt_Marca.getText().equals(""))||(!Txt_URL.getText().equals(""))){
+            String nomeMarca = Txt_Marca.getText().toUpperCase(); // Supondo que jTextFieldNomeMarca seja o campo de entrada para o nome da marca
+            String nomeurl = Txt_URL.getText(); // Supondo que jTextFieldNomeMarca seja o campo de entrada para o nome da marca
 
-        IMarcaDao marcaDao = new MarcaDao();
-        IMarcaControle marcaControle = new MarcaControle(marcaDao, (DefaultTableModel) tabelaMarcas.getModel());
-        marcaControle.adicionarMarca(nomeMarca, nomeurl);
+            IMarcaDao marcaDao = new MarcaDao();
+            IMarcaControle marcaControle = new MarcaControle(marcaDao, (DefaultTableModel) tabelaMarcas.getModel());
+            marcaControle.adicionarMarca(nomeMarca, nomeurl);
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "Campos vazios !");
+        }
     }//GEN-LAST:event_Btn_IncluirActionPerformed
 
     

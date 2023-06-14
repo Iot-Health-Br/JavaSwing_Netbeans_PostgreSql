@@ -39,6 +39,9 @@ public class TelaDosModelos extends javax.swing.JFrame {
      */
     public TelaDosModelos() {
         initComponents();
+        
+        // INICIA MAXIMIZADA
+        setExtendedState(TelaDasMarcas.MAXIMIZED_BOTH);
          
     try {
         Connection conexao = DatabaseConnection.getConnection();
@@ -66,7 +69,7 @@ public class TelaDosModelos extends javax.swing.JFrame {
 
         // Preencher tabela com os dados das marcas
         for (Modelo modelo : modelos) {
-            Object[] rowData = {modelo.getId(), modelo.getModelo(), modelo.getUrl()};
+            Object[] rowData = {modelo.getId(), modelo.getModelo(), modelo.getMarca(), modelo.getUrl()};
             tableModel.addRow(rowData);
         }
     }
@@ -126,7 +129,7 @@ public class TelaDosModelos extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Cadastro da Marca"));
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Cadastro da Modelos"));
 
         tabelaModelos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -136,7 +139,7 @@ public class TelaDosModelos extends javax.swing.JFrame {
                 {null, null, null, null}
             },
             new String [] {
-                "id", "Marca", "URL", "Logo"
+                "id", "Modelos", "Marca", "URL"
             }
         ) {
             Class[] types = new Class [] {
@@ -161,7 +164,7 @@ public class TelaDosModelos extends javax.swing.JFrame {
             }
         });
 
-        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Logo da Marca"));
+        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Logo da Modelos"));
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -327,9 +330,9 @@ public class TelaDosModelos extends javax.swing.JFrame {
 
         try {
             this.Txt_Modelos.setText((String) this.tabelaModelos.getValueAt(tabelaModelos.getSelectedRow(), 1));
-            this.Txt_URL.setText((String) this.tabelaModelos.getValueAt(tabelaModelos.getSelectedRow(), 2));
+            this.Txt_URL.setText((String) this.tabelaModelos.getValueAt(tabelaModelos.getSelectedRow(), 3));
 
-            String nomeDoArquivo = (String) this.tabelaModelos.getValueAt(tabelaModelos.getSelectedRow(), 2);
+            String nomeDoArquivo = (String) this.tabelaModelos.getValueAt(tabelaModelos.getSelectedRow(), 3);
             Txt_URL.setText(nomeDoArquivo);
 
             ImageIcon iconLogo = new ImageIcon(nomeDoArquivo);
@@ -344,6 +347,7 @@ public class TelaDosModelos extends javax.swing.JFrame {
 
     private void Btn_AddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_AddActionPerformed
         try {
+            Txt_Modelos.setText("");
             JFileChooser fc = new JFileChooser();
             fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
             // Abre no diretorio especifico
@@ -363,23 +367,32 @@ public class TelaDosModelos extends javax.swing.JFrame {
     }//GEN-LAST:event_Btn_AddActionPerformed
 
     private void Btn_AlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_AlterarActionPerformed
-        String nomeMarca = Txt_Modelos.getText(); // Supondo que jTextFieldNomeMarca seja o campo de entrada para o nome da marca
-        String url = Txt_URL.getText();
+        if (!Txt_Modelos.getText().equals("")||!Txt_URL.getText().equals("")){
+            String nomeModelo = Txt_Modelos.getText(); // Supondo que jTextFieldNomeMarca seja o campo de entrada para o nome da marca
+            String url = Txt_URL.getText();
+            String nomeMarca = (String) Jcbx_Marcas.getSelectedItem();
 
-        int selectedRow = tabelaModelos.getSelectedRow();
-        if (selectedRow != -1) {
-            int idMarca = (int) tabelaModelos.getValueAt(selectedRow, 0);
-            IModeloControle atualiza = new ModeloControle(new ModeloDao(), (DefaultTableModel) tabelaModelos.getModel());
-            atualiza.atualizarModelo(idMarca, nomeMarca, url );
+            int selectedRow = tabelaModelos.getSelectedRow();
+            if (selectedRow != -1) {
+                int idMarca = (int) tabelaModelos.getValueAt(selectedRow, 0);
+                IModeloControle atualiza = new ModeloControle(new ModeloDao(), (DefaultTableModel) tabelaModelos.getModel());
+                atualiza.atualizarModelo(idMarca, nomeModelo, url, nomeMarca);
+            }
+        }
+        else{
+              JOptionPane.showMessageDialog(null, "Campos vazios !");
         }
     }//GEN-LAST:event_Btn_AlterarActionPerformed
 
     private void Btn_IncluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_IncluirActionPerformed
         if (!Txt_Modelos.getText().equals("")||!Txt_URL.getText().equals("")){
-             String nomeModelo = Txt_Modelos.getText();
+             String nomeModelo = Txt_Modelos.getText().toUpperCase();;
              String nomeMarca = (String) Jcbx_Marcas.getSelectedItem();
              String url = Txt_URL.getText();
-             modeloControle.adicionarModelo(nomeModelo, url, nomeMarca);
+            
+            IModeloDao marcaDao = new ModeloDao();
+            IModeloControle marcaControle = new ModeloControle(marcaDao, (DefaultTableModel) tabelaModelos.getModel());
+            marcaControle.adicionarModelo(nomeModelo, url,nomeMarca);
         }
         else{
               JOptionPane.showMessageDialog(null, "Campos vazios !");

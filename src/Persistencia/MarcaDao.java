@@ -74,7 +74,7 @@ public class MarcaDao implements IMarcaDao {
         verificacaoLogo.setString(1, url);
         ResultSet resultLogo = verificacaoLogo.executeQuery();
         if (resultLogo.next()) {
-            JOptionPane.showMessageDialog(null, "A logomarca já está cadastrada.");
+            JOptionPane.showMessageDialog(null, "A logo marca já está cadastrada.");
             return null;
         }
         

@@ -14,7 +14,7 @@ import java.util.List;
 
 public interface IModeloDao {
     int buscarIdMarca(String nomeMarca);
-    boolean atualizarModelo(int id, String novoNome, String novoUrl );
-    void inserirModelo(String nomeModelo, String url, int idMarca);
+    boolean atualizarModelo(int id, String novoNome, String novoUrl, int novaMarca );
+    Modelo adicionarModelo(String nome, String url, int idMarca);
     List<Modelo> listarModelos();
 }
