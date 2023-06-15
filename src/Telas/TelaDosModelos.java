@@ -10,6 +10,8 @@ import Persistencia.ModeloDao;
 import Modelos.Modelo;
 import Conection.DatabaseConnection;
 
+import Modelos.MarcaModelo;
+
 import java.io.File;
 import java.util.List;
 import javax.swing.ImageIcon;
@@ -33,15 +35,17 @@ import javax.swing.DefaultComboBoxModel;
 public class TelaDosModelos extends javax.swing.JFrame {
        private IModeloControle modeloControle;
 
+       // Combo Box - Combustivel 
+       String selectedValue = "";
 
-    /**
-     * Creates new form TelaDasMarcas
-     */
     public TelaDosModelos() {
         initComponents();
         
         // INICIA MAXIMIZADA
         setExtendedState(TelaDasMarcas.MAXIMIZED_BOTH);
+        
+        //Combobox inicializa Vazia
+        Jcbx_Marcas.setSelectedIndex(-1);
          
     try {
         Connection conexao = DatabaseConnection.getConnection();
@@ -55,6 +59,7 @@ public class TelaDosModelos extends javax.swing.JFrame {
     catch (SQLException ex) {
         exibirMensagemErro("Erro ao obter conexão com o banco de dados: " + ex.getMessage());
         }   
+    
         preencherComboBoxMarcas();
         
         // Inicia a Tabela tabelaMarcas atualizada.
@@ -126,6 +131,11 @@ public class TelaDosModelos extends javax.swing.JFrame {
         Jcbx_Marcas = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
         Txt_Modelos = new javax.swing.JTextField();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        MenuMarcas = new javax.swing.JMenu();
+        MenuVeiculos = new javax.swing.JMenu();
+        jMenu2 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -303,6 +313,21 @@ public class TelaDosModelos extends javax.swing.JFrame {
                 .addContainerGap(15, Short.MAX_VALUE))
         );
 
+        jMenu1.setText("File");
+
+        MenuMarcas.setText("Tela de Marcas");
+        jMenu1.add(MenuMarcas);
+
+        MenuVeiculos.setText("Tela de Veiculos");
+        jMenu1.add(MenuVeiculos);
+
+        jMenuBar1.add(jMenu1);
+
+        jMenu2.setText("Edit");
+        jMenuBar1.add(jMenu2);
+
+        setJMenuBar(jMenuBar1);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -368,7 +393,7 @@ public class TelaDosModelos extends javax.swing.JFrame {
 
     private void Btn_AlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_AlterarActionPerformed
         if (!Txt_Modelos.getText().equals("")||!Txt_URL.getText().equals("")){
-            String nomeModelo = Txt_Modelos.getText(); // Supondo que jTextFieldNomeMarca seja o campo de entrada para o nome da marca
+            String nomeModelo = Txt_Modelos.getText().toUpperCase(); // Supondo que jTextFieldNomeMarca seja o campo de entrada para o nome da marca
             String url = Txt_URL.getText();
             String nomeMarca = (String) Jcbx_Marcas.getSelectedItem();
 
@@ -386,7 +411,7 @@ public class TelaDosModelos extends javax.swing.JFrame {
 
     private void Btn_IncluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_IncluirActionPerformed
         if (!Txt_Modelos.getText().equals("")||!Txt_URL.getText().equals("")){
-             String nomeModelo = Txt_Modelos.getText().toUpperCase();;
+             String nomeModelo = Txt_Modelos.getText().toUpperCase();
              String nomeMarca = (String) Jcbx_Marcas.getSelectedItem();
              String url = Txt_URL.getText();
             
@@ -443,12 +468,17 @@ public class TelaDosModelos extends javax.swing.JFrame {
     private javax.swing.JButton Btn_Alterar;
     private javax.swing.JButton Btn_Incluir;
     private javax.swing.JComboBox<String> Jcbx_Marcas;
+    private javax.swing.JMenu MenuMarcas;
+    private javax.swing.JMenu MenuVeiculos;
     private javax.swing.JLabel Panel_Logo;
     private javax.swing.JTextField Txt_Modelos;
     private javax.swing.JTextField Txt_URL;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;

@@ -105,10 +105,9 @@ public class ModeloDao implements IModeloDao {
                  String.format("UPDATE %s SET %s = ?, %s = ?, %s = ? WHERE %s = ?", TABELA_MODELOS, COLUNA_MODELOS, COLUNA_URL, COLUNA_IDMARCAS, COLUNA_ID))) {
             statement.setString(1, novoNome);
             statement.setString(2, novaUrl);
-            statement.setInt(4, id);
-            
             statement.setInt(3, novaMarca);
-            
+            statement.setInt(4, id);
+                       
             int rowsAffected = statement.executeUpdate();
             return rowsAffected > 0;
         } 
