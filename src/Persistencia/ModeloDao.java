@@ -26,6 +26,9 @@ public class ModeloDao implements IModeloDao {
     private static final String COLUNA_URL = "url";
     private static final String COLUNA_IDMARCAS = "idmarcas";
 
+    private static final String TABELA_MARCAS = "tabelademarcas";
+    private static final String COLUNA_MARCAS = "marcas";
+    
     public ModeloDao() {
          criarTabela();
     }
@@ -49,35 +52,27 @@ public class ModeloDao implements IModeloDao {
 
     @Override
     public int buscarIdMarca(String nomeMarca) {
+        
         int idMarca = 0;
-        try {
-            PreparedStatement stmt = connection.prepareStatement("SELECT id FROM tabelademarcas WHERE marcas = ?");
-            stmt.setString(1, nomeMarca);
-            ResultSet rs = stmt.executeQuery();
-            if (rs.next()) {
-                idMarca = rs.getInt("id");
-            }
-            stmt.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
+
+    try (Connection conexao = DatabaseConnection.getConnection();
+         PreparedStatement statement = conexao.prepareStatement("SELECT id FROM tabelademarcas WHERE Marcas = ?")) {
+
+        statement.setString(1, nomeMarca);
+        ResultSet resultSet = statement.executeQuery();
+
+        if (resultSet.next()) {
+            idMarca = resultSet.getInt("id");
         }
-        return idMarca;
+        resultSet.close();
+    } 
+    catch (SQLException e) {
+        e.printStackTrace();
+    }
+    return idMarca;
+
     }
 
-    @Override
-    public void inserirModelo(String nomeModelo, String url, int idMarca) {
-        try {
-            PreparedStatement stmt = connection.prepareStatement("INSERT INTO tabelademodelos (modelos, url, idmarcas) VALUES (?, ?, ?)");
-            stmt.setString(1, nomeModelo);
-            stmt.setString(2, url);
-            stmt.setInt(3, idMarca);
-            stmt.executeUpdate();
-            stmt.close();
-            System.out.println("Modelo adicionado com sucesso!");
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
     
     public List<Modelo> listarModelos() {
         List<Modelo> modelos = new ArrayList<>();
@@ -104,13 +99,15 @@ public class ModeloDao implements IModeloDao {
         return modelos;
     }
     
-    public boolean atualizarModelo(int id, String novoNome, String novaUrl) {
+    public boolean atualizarModelo(int id, String novoNome, String novaUrl, int novaMarca) {
         try (Connection conexao = DatabaseConnection.getConnection();
             PreparedStatement statement = conexao.prepareStatement(
-                 String.format("UPDATE %s SET %s = ?, %s = ? WHERE %s = ?", TABELA_MODELOS, COLUNA_MODELOS, COLUNA_URL, COLUNA_ID))) {
+                 String.format("UPDATE %s SET %s = ?, %s = ?, %s = ? WHERE %s = ?", TABELA_MODELOS, COLUNA_MODELOS, COLUNA_URL, COLUNA_IDMARCAS, COLUNA_ID))) {
             statement.setString(1, novoNome);
             statement.setString(2, novaUrl);
-            statement.setInt(3, id);
+            statement.setInt(3, novaMarca);
+            statement.setInt(4, id);
+                       
             int rowsAffected = statement.executeUpdate();
             return rowsAffected > 0;
         } 
@@ -118,6 +115,69 @@ public class ModeloDao implements IModeloDao {
             e.printStackTrace();
             return false;
         }
+    }
+
+    @Override
+    public Modelo adicionarModelo(String nome, String url, int idMarca) {
+                
+        try (Connection conexao = DatabaseConnection.getConnection();
+                // Verificar se a marca já está cadastrada
+                PreparedStatement verificacaoStatement = conexao.prepareStatement(
+                 String.format("SELECT * FROM %s WHERE %s = ?", TABELA_MODELOS, COLUNA_MODELOS ));
+                
+                // Verificar se a logo já está cadastrada
+                PreparedStatement verificacaoLogo = conexao.prepareStatement(
+                 String.format("SELECT * FROM %s WHERE %s = ?", TABELA_MODELOS, COLUNA_URL ));
+                 
+                // Inserir a Marca e URL no banco de dados
+                PreparedStatement insercaoStatement = conexao.prepareStatement(
+                 String.format("INSERT INTO %s (%s, %s, %s) VALUES (?, ?, ?) ", TABELA_MODELOS, COLUNA_MODELOS, COLUNA_URL,COLUNA_IDMARCAS),
+                 Statement.RETURN_GENERATED_KEYS)) {
+
+        // Verificar se a marca já está cadastrada
+        verificacaoStatement.setString(1, nome);
+        ResultSet resultSet = verificacaoStatement.executeQuery();
+        if (resultSet.next()) {
+            JOptionPane.showMessageDialog(null, "O modelo já está cadastrado.");
+            return null;
+        }
+        
+        // Verificar se a logo já está cadastrada
+        verificacaoLogo.setString(1, url);
+        ResultSet resultLogo = verificacaoLogo.executeQuery();
+        if (resultLogo.next()) {
+            JOptionPane.showMessageDialog(null, "A logo do modelo já está cadastrada.");
+            return null;
+        }
+        
+        
+        
+        // Inserir a marca no banco de dados
+        insercaoStatement.setString(1, nome );
+        insercaoStatement.setString(2, url );
+        insercaoStatement.setInt(3, idMarca );
+        int rowsAffected = insercaoStatement.executeUpdate();
+
+        if (rowsAffected == 0) {
+            return null;
+        }
+
+        try (ResultSet generatedKeys = insercaoStatement.getGeneratedKeys()) {
+            if (generatedKeys.next()) {
+                int id = generatedKeys.getInt(1);
+                
+                int numero = idMarca;
+                String numeroString = Integer.toString(numero);
+                
+                return new Modelo(id, nome, url, numeroString);
+            } else {
+                return null;
+            }
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+        return null;
+    }
     }
 }
 

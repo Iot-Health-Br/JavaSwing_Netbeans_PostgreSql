@@ -11,7 +11,7 @@ import java.util.List;
 
 public interface IModeloControle {
     void adicionarModelo(String nomeModelo, String url, String nomeMarca);
-    void atualizarModelo(int id, String novoNome, String novoUrl);
+    void atualizarModelo(int id, String novoNome, String novoUrl, String novaMarca);
 }
 
 
