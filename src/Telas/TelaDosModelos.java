@@ -316,9 +316,19 @@ public class TelaDosModelos extends javax.swing.JFrame {
         jMenu1.setText("File");
 
         MenuMarcas.setText("Tela de Marcas");
+        MenuMarcas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MenuMarcasActionPerformed(evt);
+            }
+        });
         jMenu1.add(MenuMarcas);
 
         MenuVeiculos.setText("Tela de Veiculos");
+        MenuVeiculos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MenuVeiculosActionPerformed(evt);
+            }
+        });
         jMenu1.add(MenuVeiculos);
 
         jMenuBar1.add(jMenu1);
@@ -423,6 +433,30 @@ public class TelaDosModelos extends javax.swing.JFrame {
               JOptionPane.showMessageDialog(null, "Campos vazios !");
         }
     }//GEN-LAST:event_Btn_IncluirActionPerformed
+
+    private void MenuMarcasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuMarcasActionPerformed
+        try {
+            TelaDasMarcas telaModelo = new TelaDasMarcas();
+            telaModelo.setLocationRelativeTo(null);
+            telaModelo.setVisible(true);
+            this.setVisible(false);
+            telaModelo.setResizable(false);
+        } catch (Exception erro) {
+            JOptionPane.showMessageDialog(this, erro);
+        }
+    }//GEN-LAST:event_MenuMarcasActionPerformed
+
+    private void MenuVeiculosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuVeiculosActionPerformed
+        try {
+            TelaDosVeiculos telaModelo = new TelaDosVeiculos();
+            telaModelo.setLocationRelativeTo(null);
+            telaModelo.setVisible(true);
+            this.setVisible(false);
+            telaModelo.setResizable(false);
+        } catch (Exception erro) {
+            JOptionPane.showMessageDialog(this, erro);
+        }
+    }//GEN-LAST:event_MenuVeiculosActionPerformed
 
     
     /**
