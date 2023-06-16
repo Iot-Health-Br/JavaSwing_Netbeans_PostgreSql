@@ -17,6 +17,6 @@ import java.util.List;
 public interface IVeiculoDao {
 
     boolean atualizarVeiculo(int id, String novaMarca, String novaModelo, String novaCor, String novaPlaca, String novoUrl );
-    Veiculo adicionarVeiculo(String marca, String modelo,String cor, String Placa, String url);
+    Veiculo adicionarVeiculo(String marca, String modelo,String cor, String Placa, int Anofab, int Anomodel, String combustivel,int km, int Renavam,String compra, String venda, String url);
     List<Veiculo> listarVeiculos();
 }

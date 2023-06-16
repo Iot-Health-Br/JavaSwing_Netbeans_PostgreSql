@@ -30,12 +30,17 @@ public class VeiculoControle implements IVeiculoControle {
     }
     
     @Override
-    public void adicionarVeiculo(String Marca, String Modelo, String cor,String placa, String Url) {
+    public void adicionarVeiculo(String Marca, String Modelo, String cor,String placa, String fab, String anomodelo, String combustivel, String km, String renavam, String compra, String venda, String Url) {
         
-        Veiculo veiculo = veiculoDao.adicionarVeiculo(Marca, Modelo, cor, placa, Url);
+         int novofab = Integer.parseInt(fab); // Conversão de String para int
+         int novomodelo = Integer.parseInt(anomodelo); // Conversão de String para int
+         int novomKm = Integer.parseInt(km); // Conversão de String para int
+         int novoRenavam = Integer.parseInt(renavam); // Conversão de String para int
+        
+        Veiculo veiculo = veiculoDao.adicionarVeiculo(Marca, Modelo, cor, placa, novofab, novomodelo, combustivel, novomKm, novoRenavam, compra, venda, Url);
         
         if (veiculo != null) {
-            tableModel.addRow(new Object[]{veiculo.getId(), veiculo.getMarca(), veiculo.getModelo(),veiculo.getCor(),veiculo.getPlaca(), veiculo.getUrl()});
+            tableModel.addRow(new Object[]{veiculo.getId(), veiculo.getMarca(), veiculo.getModelo(),veiculo.getCor(),veiculo.getPlaca(),veiculo.getAnoFabricacao(),veiculo.getAnoModelo(),veiculo.getCombustivel(), veiculo.getQuilometragem(),veiculo.getRenavam(),veiculo.getPreçoCompra(),veiculo.getPreçoVenda(), veiculo.getUrl()});
         } else {
             JOptionPane.showMessageDialog(null, "Erro ao adicionar o Veiculo");
         }

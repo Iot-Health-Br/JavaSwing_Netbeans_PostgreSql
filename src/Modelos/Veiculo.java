@@ -18,20 +18,27 @@ public class Veiculo {
     private String cor;
     private String placa;
     private int renavam;
-    private String preçoCompra;
-    private String preçoVenda;
     private int anoFabricacao;
     private int anoModelo;
+    private String precoCompra;
+    private String precoVenda;
     private String combustivel;
     private int quilometragem;   
     private String url;
     
-public Veiculo( int id, String marca, String modelo, String cor, String placa, String url) {
+public Veiculo( int id, String marca, String modelo, String cor, String placa, int fab, int model, String combustivel,int quilometragem, int renavam, String precoCompra, String precoVenda, String url) {
         this.id = id;
         this.modelo = marca;
         this.marca = modelo;
         this.cor = cor;
         this.placa = placa;
+        this.renavam = renavam;
+        this.anoFabricacao = fab;
+        this.anoModelo = model;
+        this.combustivel = combustivel;
+        this.quilometragem = quilometragem;
+        this.precoCompra = precoCompra;
+        this.precoVenda = precoVenda;
         this.url = url;
     }
 
@@ -84,19 +91,19 @@ public Veiculo( int id, String marca, String modelo, String cor, String placa, S
     }
 
     public String getPreçoCompra() {
-        return preçoCompra;
+        return precoCompra;
     }
 
     public void setPreçoCompra(String preçoCompra) {
-        this.preçoCompra = preçoCompra;
+        this.precoCompra = preçoCompra;
     }
 
     public String getPreçoVenda() {
-        return preçoVenda;
+        return precoVenda;
     }
 
     public void setPreçoVenda(String preçoVenda) {
-        this.preçoVenda = preçoVenda;
+        this.precoVenda = preçoVenda;
     }
 
     public int getAnoFabricacao() {

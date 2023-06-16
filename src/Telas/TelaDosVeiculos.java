@@ -54,7 +54,7 @@ public class TelaDosVeiculos extends javax.swing.JFrame {
 
         // Preencher tabela com os dados do veiculo
         for (Veiculo veiculo : veiculos) {
-            Object[] rowData = {veiculo.getId(), veiculo.getModelo(), veiculo.getMarca(), veiculo.getCor(), veiculo.getPlaca(), veiculo.getUrl()};
+            Object[] rowData = {veiculo.getId(), veiculo.getModelo(), veiculo.getMarca(), veiculo.getCor(), veiculo.getPlaca(), veiculo.getRenavam(), veiculo.getAnoFabricacao(), veiculo.getAnoModelo(),veiculo.getQuilometragem(),veiculo.getRenavam(),veiculo.getPreçoCompra(),veiculo.getPreçoVenda(), veiculo.getUrl()};
             tableModel.addRow(rowData);
         }
         
@@ -402,17 +402,17 @@ private void preencherComboBoxMarcasModelos() {
 
         tabelaVeiculos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "ID", "MARCA", "MODELO", "COR", "PLACA", "URL"
+                "ID", "MARCA", "MODELO", "COR", "PLACA", "ANO FAB.", "ANO MODELO", "COMBUSTIVEL", "KM", "RENAVAM", "COMPRA", "VENDA", "URL"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -523,7 +523,7 @@ private void preencherComboBoxMarcasModelos() {
 
             IVeiculoDao veiculoDao = new VeiculoDao();
             IVeiculoControle veiculoControle = new VeiculoControle(veiculoDao, (DefaultTableModel) tabelaVeiculos.getModel());
-            veiculoControle.adicionarVeiculo(nomeMarca, nomeModelo, cor, placa, url);            
+            veiculoControle.adicionarVeiculo(nomeMarca, nomeModelo, cor, placa, anoFab, anoModel, combustivel, km, renavam, compra, venda, url);            
         }
         else{
             JOptionPane.showMessageDialog(null, "Campos vazios !");

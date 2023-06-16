@@ -529,12 +529,19 @@
                 <Component class="javax.swing.JTable" name="tabelaVeiculos">
                   <Properties>
                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                      <Table columnCount="6" rowCount="4">
+                      <Table columnCount="13" rowCount="4">
                         <Column editable="true" title="ID" type="java.lang.Integer"/>
                         <Column editable="true" title="MARCA" type="java.lang.String"/>
                         <Column editable="true" title="MODELO" type="java.lang.String"/>
                         <Column editable="true" title="COR" type="java.lang.String"/>
                         <Column editable="true" title="PLACA" type="java.lang.String"/>
+                        <Column editable="true" title="ANO FAB." type="java.lang.Integer"/>
+                        <Column editable="true" title="ANO MODELO" type="java.lang.Integer"/>
+                        <Column editable="true" title="COMBUSTIVEL" type="java.lang.String"/>
+                        <Column editable="true" title="KM" type="java.lang.Integer"/>
+                        <Column editable="true" title="RENAVAM" type="java.lang.Integer"/>
+                        <Column editable="true" title="COMPRA" type="java.lang.String"/>
+                        <Column editable="true" title="VENDA" type="java.lang.String"/>
                         <Column editable="true" title="URL" type="java.lang.String"/>
                       </Table>
                     </Property>
