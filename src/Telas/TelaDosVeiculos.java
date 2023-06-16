@@ -29,16 +29,18 @@ import javax.swing.text.MaskFormatter;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import Renderizador.RendererIcon; 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 public class TelaDosVeiculos extends javax.swing.JFrame {
     private IVeiculoControle veiculoControle;
     
-    
-    public TelaDosVeiculos() {
+
+    public TelaDosVeiculos() throws ParseException {
+     
         initComponents();
         setExtendedState(TelaDosModelos.MAXIMIZED_BOTH);
-        preencherComboBoxMarcasModelos();
         
         // Inicia a Tabela  atualizada.
         IVeiculoDao veiculoDao = new VeiculoDao();
@@ -50,11 +52,13 @@ public class TelaDosVeiculos extends javax.swing.JFrame {
         // Obter lista de marcas do banco de dados
         List<Veiculo> veiculos = veiculoDao.listarVeiculos();
 
-        // Preencher tabela com os dados das marcas
+        // Preencher tabela com os dados do veiculo
         for (Veiculo veiculo : veiculos) {
-            Object[] rowData = {veiculo.getId(), veiculo.getModelo(), veiculo.getMarca(), veiculo.getUrl()};
+            Object[] rowData = {veiculo.getId(), veiculo.getModelo(), veiculo.getMarca(), veiculo.getCor(), veiculo.getPlaca(), veiculo.getUrl()};
             tableModel.addRow(rowData);
         }
+        
+        preencherComboBoxMarcasModelos();
     }
     
     
@@ -116,6 +120,7 @@ private void preencherComboBoxMarcasModelos() {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
@@ -127,16 +132,33 @@ private void preencherComboBoxMarcasModelos() {
         Txt_URL = new javax.swing.JTextField();
         JCBX_Marca = new javax.swing.JComboBox<>();
         JCBX_Modelo = new javax.swing.JComboBox<>();
+        jLabel1 = new javax.swing.JLabel();
+        Txt_Cor = new javax.swing.JTextField();
+        Bt_PAntiga = new javax.swing.JRadioButton();
+        Bt_Mercosul = new javax.swing.JRadioButton();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        Txt_Placa = new javax.swing.JFormattedTextField();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        Txt_PrCompra = new javax.swing.JFormattedTextField();
+        jLabel10 = new javax.swing.JLabel();
+        Txt_PrVenda = new javax.swing.JFormattedTextField();
+        jLabel11 = new javax.swing.JLabel();
+        Txt_AnoFab = new javax.swing.JFormattedTextField();
+        Txt_AnoModelo = new javax.swing.JFormattedTextField();
+        JCBX_Combustivel = new javax.swing.JComboBox<>();
+        Txt_KM = new javax.swing.JFormattedTextField();
+        jLabel12 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
+        Txt_Renavam = new javax.swing.JFormattedTextField();
         jPanel4 = new javax.swing.JPanel();
         Panel_Logo = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabelaVeiculos = new javax.swing.JTable();
         Btn_Add = new javax.swing.JButton();
-        jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
-        MenuMarcas = new javax.swing.JMenu();
-        MenuModelos = new javax.swing.JMenu();
-        jMenu2 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -179,6 +201,48 @@ private void preencherComboBoxMarcasModelos() {
             }
         });
 
+        jLabel1.setText("Cor :");
+
+        buttonGroup1.add(Bt_PAntiga);
+        Bt_PAntiga.setText("Placa Antiga");
+        Bt_PAntiga.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                Bt_PAntigaMouseClicked(evt);
+            }
+        });
+
+        buttonGroup1.add(Bt_Mercosul);
+        Bt_Mercosul.setText("Placa Mercosul");
+        Bt_Mercosul.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                Bt_MercosulMouseClicked(evt);
+            }
+        });
+
+        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/LogosIcones/PLacaNormal.png"))); // NOI18N
+        jLabel5.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/LogosIcones/PLacaMercoSul.png"))); // NOI18N
+        jLabel6.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        jLabel7.setText("Placa :");
+
+        jLabel8.setText("Renavam :");
+
+        jLabel9.setText("Preço de Compra :");
+
+        jLabel10.setText("Preço de Venda :");
+
+        jLabel11.setText("Ano de Fabricaçao :");
+
+        JCBX_Combustivel.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Gasolina", "Etanol", "GNV", "Diesel", "Eletrico", "Hibrido" }));
+
+        jLabel12.setText("Ano do Modelo :");
+
+        jLabel13.setText("Combustivel :");
+
+        jLabel14.setText("Quilometragem :");
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -189,39 +253,128 @@ private void preencherComboBoxMarcasModelos() {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(Btn_Alterar)
                 .addGap(26, 26, 26))
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(18, 18, 18)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel4))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(JCBX_Marca, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(JCBX_Modelo, 0, 151, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(40, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(Txt_URL, javax.swing.GroupLayout.PREFERRED_SIZE, 447, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(18, 18, 18)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel1)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jLabel4))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(JCBX_Marca, 0, 151, Short.MAX_VALUE)
+                                    .addComponent(JCBX_Modelo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(Txt_Cor)))
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(Bt_PAntiga, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(26, 26, 26)
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(Bt_Mercosul, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addGap(72, 72, 72)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(jLabel11)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(Txt_AnoFab, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel13)
+                                    .addComponent(jLabel12)
+                                    .addComponent(jLabel14))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(Txt_AnoModelo, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(JCBX_Combustivel, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(Txt_KM, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel8)
+                            .addComponent(jLabel7)
+                            .addComponent(jLabel9)
+                            .addComponent(jLabel10))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(Txt_Placa)
+                            .addComponent(Txt_PrCompra)
+                            .addComponent(Txt_PrVenda)
+                            .addComponent(Txt_Renavam, javax.swing.GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE))))
+                .addContainerGap(42, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(Txt_URL, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(JCBX_Marca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(JCBX_Modelo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 210, Short.MAX_VALUE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(9, 9, 9)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2)
+                            .addComponent(Txt_URL, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel3)
+                            .addComponent(JCBX_Marca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel4)
+                            .addComponent(JCBX_Modelo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(Txt_Cor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel1))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(Bt_Mercosul)
+                            .addComponent(Bt_PAntiga))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(Txt_Placa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel7))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel8)
+                            .addComponent(Txt_Renavam, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel9)
+                            .addComponent(Txt_PrCompra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel10)
+                            .addComponent(Txt_PrVenda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(52, 52, 52)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel11)
+                            .addComponent(Txt_AnoFab, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(Txt_AnoModelo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel12))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(JCBX_Combustivel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel13))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(Txt_KM, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel14))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Btn_Incluir)
                     .addComponent(Btn_Alterar))
@@ -234,30 +387,38 @@ private void preencherComboBoxMarcasModelos() {
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(14, 14, 14)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addContainerGap(29, Short.MAX_VALUE)
                 .addComponent(Panel_Logo, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(57, Short.MAX_VALUE))
+                .addGap(32, 32, 32))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(17, 17, 17)
-                .addComponent(Panel_Logo, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(14, 14, 14)
+                .addComponent(Panel_Logo, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(22, Short.MAX_VALUE))
         );
 
         tabelaVeiculos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "ID", "MARCA", "MODELO", "URL"
+                "ID", "MARCA", "MODELO", "COR", "PLACA", "URL"
             }
-        ));
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
         tabelaVeiculos.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tabelaVeiculosMouseClicked(evt);
@@ -286,13 +447,13 @@ private void preencherComboBoxMarcasModelos() {
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(45, 45, 45)
-                                .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGap(20, 20, 20))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(Btn_Add)
-                                .addGap(110, 110, 110))))))
+                                .addGap(110, 110, 110))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(15, 15, 15)
+                                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(20, Short.MAX_VALUE))))))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -300,7 +461,7 @@ private void preencherComboBoxMarcasModelos() {
                 .addGap(17, 17, 17)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(Btn_Add))
                     .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -316,7 +477,7 @@ private void preencherComboBoxMarcasModelos() {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(15, 15, 15)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(28, Short.MAX_VALUE))
+                .addContainerGap(8, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -325,21 +486,6 @@ private void preencherComboBoxMarcasModelos() {
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(18, Short.MAX_VALUE))
         );
-
-        jMenu1.setText("Menu");
-
-        MenuMarcas.setText("Tela de Marcas");
-        jMenu1.add(MenuMarcas);
-
-        MenuModelos.setText("Tela de Modelos");
-        jMenu1.add(MenuModelos);
-
-        jMenuBar1.add(jMenu1);
-
-        jMenu2.setText("Sair");
-        jMenuBar1.add(jMenu2);
-
-        setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -359,13 +505,25 @@ private void preencherComboBoxMarcasModelos() {
 
     private void Btn_IncluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_IncluirActionPerformed
          if (!Txt_URL.getText().equals("")){
+            
             String nomeMarca = (String) JCBX_Marca.getSelectedItem();
             String nomeModelo = (String) JCBX_Modelo.getSelectedItem();
+            
+            String cor = Txt_Cor.getText().toUpperCase();
+            String placa = Txt_Placa.getText().toUpperCase();
+            String renavam = Txt_Renavam.getText().toUpperCase();
+            String compra = Txt_PrCompra.getText().toUpperCase();
+            String venda = Txt_PrVenda.getText().toUpperCase();
+            String anoFab = Txt_AnoFab.getText().toUpperCase();
+            String anoModel = Txt_AnoModelo.getText().toUpperCase();
+            String combustivel = (String) JCBX_Combustivel.getSelectedItem();
+            String km = Txt_KM.getText().toUpperCase();
+            
             String url = Txt_URL.getText();
 
             IVeiculoDao veiculoDao = new VeiculoDao();
             IVeiculoControle veiculoControle = new VeiculoControle(veiculoDao, (DefaultTableModel) tabelaVeiculos.getModel());
-            veiculoControle.adicionarVeiculo(nomeMarca, nomeModelo ,url);
+            veiculoControle.adicionarVeiculo(nomeMarca, nomeModelo, cor, placa, url);            
         }
         else{
             JOptionPane.showMessageDialog(null, "Campos vazios !");
@@ -376,13 +534,15 @@ private void preencherComboBoxMarcasModelos() {
         if (!Txt_URL.getText().equals("")){
             String nomeMarca = (String) JCBX_Marca.getSelectedItem();
             String nomeModelo = (String) JCBX_Modelo.getSelectedItem();
+            String cor = Txt_Cor.getText().toUpperCase();
+            String placa = Txt_Placa.getText().toUpperCase();
             String url = Txt_URL.getText();
 
             int selectedRow = tabelaVeiculos.getSelectedRow();
             if (selectedRow != -1) {
                 int idMarca = (int) tabelaVeiculos.getValueAt(selectedRow, 0);
                 IVeiculoControle atualiza = new VeiculoControle(new VeiculoDao(), (DefaultTableModel) tabelaVeiculos.getModel());
-                atualiza.atualizarVeiculo(idMarca, nomeMarca, nomeModelo, url);
+                atualiza.atualizarVeiculo(idMarca, nomeMarca, nomeModelo,cor, placa, url);
             }
         }
         else{
@@ -427,7 +587,13 @@ private void preencherComboBoxMarcasModelos() {
             String modeloSelecionado = (String) this.tabelaVeiculos.getValueAt(tabelaVeiculos.getSelectedRow(), 2);
             JCBX_Modelo.setSelectedItem(modeloSelecionado);
 
-            String nomeDoArquivo = (String) this.tabelaVeiculos.getValueAt(tabelaVeiculos.getSelectedRow(), 3);
+            String cor = (String) this.tabelaVeiculos.getValueAt(tabelaVeiculos.getSelectedRow(), 3);
+            Txt_Cor.setText(cor);
+            
+            String placa = (String) this.tabelaVeiculos.getValueAt(tabelaVeiculos.getSelectedRow(), 4);
+            Txt_Placa.setText(placa);           
+            
+            String nomeDoArquivo = (String) this.tabelaVeiculos.getValueAt(tabelaVeiculos.getSelectedRow(), 5);
             Txt_URL.setText(nomeDoArquivo);
             
             ImageIcon iconLogo = new ImageIcon(nomeDoArquivo);
@@ -493,6 +659,14 @@ private void preencherComboBoxMarcasModelos() {
     }
     }//GEN-LAST:event_JCBX_MarcaFocusLost
 
+    private void Bt_PAntigaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Bt_PAntigaMouseClicked
+
+    }//GEN-LAST:event_Bt_PAntigaMouseClicked
+
+    private void Bt_MercosulMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Bt_MercosulMouseClicked
+
+    }//GEN-LAST:event_Bt_MercosulMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -524,27 +698,51 @@ private void preencherComboBoxMarcasModelos() {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TelaDosVeiculos().setVisible(true);
+
+                try {
+                    new TelaDosVeiculos().setVisible(true);
+                } catch (ParseException ex) {
+                    Logger.getLogger(TelaDosVeiculos.class.getName()).log(Level.SEVERE, null, ex);
+                }
+  
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JRadioButton Bt_Mercosul;
+    private javax.swing.JRadioButton Bt_PAntiga;
     private javax.swing.JButton Btn_Add;
     private javax.swing.JButton Btn_Alterar;
     private javax.swing.JButton Btn_Incluir;
+    private javax.swing.JComboBox<String> JCBX_Combustivel;
     private javax.swing.JComboBox<String> JCBX_Marca;
     private javax.swing.JComboBox<String> JCBX_Modelo;
-    private javax.swing.JMenu MenuMarcas;
-    private javax.swing.JMenu MenuModelos;
     private javax.swing.JLabel Panel_Logo;
+    private javax.swing.JFormattedTextField Txt_AnoFab;
+    private javax.swing.JFormattedTextField Txt_AnoModelo;
+    private javax.swing.JTextField Txt_Cor;
+    private javax.swing.JFormattedTextField Txt_KM;
+    private javax.swing.JFormattedTextField Txt_Placa;
+    private javax.swing.JFormattedTextField Txt_PrCompra;
+    private javax.swing.JFormattedTextField Txt_PrVenda;
+    private javax.swing.JFormattedTextField Txt_Renavam;
     private javax.swing.JTextField Txt_URL;
+    private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;

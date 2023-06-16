@@ -253,9 +253,19 @@ public class TelaDasMarcas extends javax.swing.JFrame {
         jMenu1.setText("File");
 
         MenuModelos.setText("Tela dos Modelos");
+        MenuModelos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MenuModelosActionPerformed(evt);
+            }
+        });
         jMenu1.add(MenuModelos);
 
         MenuVeiculos.setText("Tela dos Veiculos");
+        MenuVeiculos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MenuVeiculosActionPerformed(evt);
+            }
+        });
         jMenu1.add(MenuVeiculos);
 
         jMenuBar1.add(jMenu1);
@@ -358,6 +368,30 @@ public class TelaDasMarcas extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Campos vazios !");
         }
     }//GEN-LAST:event_Btn_IncluirActionPerformed
+
+    private void MenuModelosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuModelosActionPerformed
+        try {
+            TelaDosModelos telaModelo = new TelaDosModelos();
+            telaModelo.setLocationRelativeTo(null);
+            telaModelo.setVisible(true);
+            this.setVisible(false);
+            telaModelo.setResizable(false);
+        } catch (Exception erro) {
+            JOptionPane.showMessageDialog(this, erro);
+        }
+    }//GEN-LAST:event_MenuModelosActionPerformed
+
+    private void MenuVeiculosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuVeiculosActionPerformed
+        try {
+            TelaDosVeiculos telaModelo = new TelaDosVeiculos();
+            telaModelo.setLocationRelativeTo(null);
+            telaModelo.setVisible(true);
+            this.setVisible(false);
+            telaModelo.setResizable(false);
+        } catch (Exception erro) {
+            JOptionPane.showMessageDialog(this, erro);
+        }
+    }//GEN-LAST:event_MenuVeiculosActionPerformed
 
     
     /**

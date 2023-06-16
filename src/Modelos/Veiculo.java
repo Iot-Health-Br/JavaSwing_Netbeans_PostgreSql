@@ -26,10 +26,12 @@ public class Veiculo {
     private int quilometragem;   
     private String url;
     
-public Veiculo( int id, String marca, String modelo, String url) {
+public Veiculo( int id, String marca, String modelo, String cor, String placa, String url) {
         this.id = id;
         this.modelo = marca;
         this.marca = modelo;
+        this.cor = cor;
+        this.placa = placa;
         this.url = url;
     }
 

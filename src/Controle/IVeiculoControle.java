@@ -12,6 +12,6 @@ import Telas.TelaDosVeiculos;
 
 
 public interface IVeiculoControle {
-    void adicionarVeiculo( String Marca, String Modelo, String Url);
-    void atualizarVeiculo(int id, String novaMarca, String novoModelo, String novoUrl);
+    void adicionarVeiculo( String Marca, String Modelo,String cor, String placa, String Url);
+    void atualizarVeiculo(int id, String novaMarca, String novoModelo, String novaCor, String novaPlaca, String novoUrl);
 }

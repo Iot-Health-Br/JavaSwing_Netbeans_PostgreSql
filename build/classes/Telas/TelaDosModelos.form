@@ -13,11 +13,17 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Tela de Marcas"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="MenuMarcasActionPerformed"/>
+              </Events>
             </Menu>
             <Menu class="javax.swing.JMenu" name="MenuVeiculos">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Tela de Veiculos"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="MenuVeiculosActionPerformed"/>
+              </Events>
             </Menu>
           </SubComponents>
         </Menu>

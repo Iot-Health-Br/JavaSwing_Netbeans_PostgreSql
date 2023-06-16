@@ -30,6 +30,17 @@ public class VeiculoDao implements IVeiculoDao {
     private static final String COLUNA_ID = "id";
     private static final String COLUNA_MARCAS = "marcas";
     private static final String COLUNA_MODELOS = "modelos";
+    
+    private static final String COLUNA_COR = "cor";
+    private static final String COLUNA_PLACA = "placa";
+    private static final String COLUNA_RENAVAM = "renavam";
+    private static final String COLUNA_COMPRA = "preçoCompra";
+    private static final String COLUNA_VENDA = "preçoVenda";
+    private static final String COLUNA_ANOFAB = "anoFabricaçao";
+    private static final String COLUNA_ANOMODELO = "AnoModelo";
+    private static final String COLUNA_COMBUSTIVEL = "combsutivel";
+    private static final String COLUNA_KM = "Quilometragem";   
+    
     private static final String COLUNA_URL = "url";
 
     
@@ -44,10 +55,11 @@ public class VeiculoDao implements IVeiculoDao {
     private void criarTabela() {
         try (Connection conexao = DatabaseConnection.getConnection();
              Statement statement = conexao.createStatement()) {
-            String query = String.format("CREATE TABLE IF NOT EXISTS %s (%s SERIAL PRIMARY KEY, %s VARCHAR(255), %s VARCHAR(255), %s VARCHAR(255))",
-                    TABELA_VEICULOS, COLUNA_ID, COLUNA_MARCAS, COLUNA_MODELOS, COLUNA_URL );
+             String query = String.format("CREATE TABLE IF NOT EXISTS %s (%s SERIAL PRIMARY KEY, %s VARCHAR(50), %s VARCHAR(50), %s VARCHAR(50), %s VARCHAR(7), %s VARCHAR(100))",
+        TABELA_VEICULOS, COLUNA_ID, COLUNA_MARCAS, COLUNA_MODELOS, COLUNA_COR, COLUNA_PLACA, COLUNA_URL);
             statement.executeUpdate(query);
-        } catch (SQLException e) {
+        } 
+        catch (SQLException e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Erro ao criar tabela de veiculos");
         }
@@ -65,10 +77,13 @@ public class VeiculoDao implements IVeiculoDao {
             while (resultSet.next()) {
                 int id = resultSet.getInt(COLUNA_ID);
                 String marcas = resultSet.getString(COLUNA_MARCAS);
-                String modelo = resultSet.getString(COLUNA_MODELOS);               
+                String modelo = resultSet.getString(COLUNA_MODELOS);            
+                String cor = resultSet.getString(COLUNA_COR);
+                String placa = resultSet.getString(COLUNA_PLACA);                
                 String url = resultSet.getString(COLUNA_URL);
+                
 
-                Veiculo veiculo = new Veiculo(id, marcas, modelo, url);
+                Veiculo veiculo = new Veiculo(id, marcas, modelo, cor, placa, url);
                 veiculos.add(veiculo);
             }
 
@@ -80,14 +95,16 @@ public class VeiculoDao implements IVeiculoDao {
         return veiculos;
     }
     
-    public boolean atualizarVeiculo(int id, String novaMarca, String novaModelo, String novaUrl) {
+    public boolean atualizarVeiculo(int id, String novaMarca, String novaModelo, String novaCor, String novaPlaca, String novaUrl) {
         try (Connection conexao = DatabaseConnection.getConnection();
             PreparedStatement statement = conexao.prepareStatement(
-                 String.format("UPDATE %s SET %s = ?, %s = ?, %s = ? WHERE %s = ?", TABELA_VEICULOS, COLUNA_MARCAS, COLUNA_MODELOS, COLUNA_URL, COLUNA_ID))) {
+ String.format("UPDATE %s SET %s = ?, %s = ?, %s = ?, %s = ?, %s = ? WHERE %s = ?", TABELA_VEICULOS, COLUNA_MARCAS, COLUNA_MODELOS, COLUNA_COR, COLUNA_PLACA, COLUNA_URL, COLUNA_ID))) {
             statement.setString(1, novaMarca);
             statement.setString(2, novaModelo);
-            statement.setString(3, novaUrl);
-            statement.setInt(4, id);
+            statement.setString(3, novaCor);
+            statement.setString(4, novaPlaca);
+            statement.setString(5, novaUrl);
+            statement.setInt(6, id);
                        
             int rowsAffected = statement.executeUpdate();
             return rowsAffected > 0;
@@ -99,27 +116,27 @@ public class VeiculoDao implements IVeiculoDao {
     }
 
     @Override
-    public Veiculo adicionarVeiculo(String Marca, String Modelo, String url) {
+    public Veiculo adicionarVeiculo(String Marca, String Modelo, String cor, String placa, String url) {
                 
         try (Connection conexao = DatabaseConnection.getConnection();
                 // Verificar se o veiculo já está cadastrada colocar a placa
                 PreparedStatement verificacaoStatement = conexao.prepareStatement(
-                 String.format("SELECT * FROM %s WHERE %s = ?", TABELA_VEICULOS, COLUNA_MARCAS ));
+                 String.format("SELECT * FROM %s WHERE %s = ?", TABELA_VEICULOS, COLUNA_PLACA ));
                 
                 // Verificar se a foto do carro já está cadastrada
                 PreparedStatement verificacaoLogo = conexao.prepareStatement(
                  String.format("SELECT * FROM %s WHERE %s = ?", TABELA_VEICULOS, COLUNA_URL ));
                  
-                // Inserir a Marca e URL no banco de dados
+                // Inserir OS DADOS DO VEICULO no banco de dados
                 PreparedStatement insercaoStatement = conexao.prepareStatement(
-                 String.format("INSERT INTO %s (%s, %s, %s) VALUES (?, ?, ?) ", TABELA_VEICULOS, COLUNA_MARCAS, COLUNA_MODELOS, COLUNA_URL),
+                 String.format("INSERT INTO %s (%s, %s, %s, %s, %s) VALUES (?, ?, ?, ?, ?) ", TABELA_VEICULOS, COLUNA_MARCAS, COLUNA_MODELOS, COLUNA_COR, COLUNA_PLACA, COLUNA_URL),
                  Statement.RETURN_GENERATED_KEYS)) {
 
-        // Verificar se a marca já está cadastrada
-        verificacaoStatement.setString(1, Marca);
+        // Verificar se a placa já está cadastrada
+        verificacaoStatement.setString(1, placa);
         ResultSet resultSet = verificacaoStatement.executeQuery();
         if (resultSet.next()) {
-            JOptionPane.showMessageDialog(null, "O veiculo já está cadastrado.");
+            JOptionPane.showMessageDialog(null, "A placa do veiculo já está cadastrada.");
             return null;
         }
         
@@ -134,7 +151,10 @@ public class VeiculoDao implements IVeiculoDao {
         // Inserir a marca no banco de dados
         insercaoStatement.setString(1, Marca );
         insercaoStatement.setString(2, Modelo );
-        insercaoStatement.setString(3, url );
+        insercaoStatement.setString(3, cor );   
+        insercaoStatement.setString(4, placa );           
+        insercaoStatement.setString(5, url );
+        
         int rowsAffected = insercaoStatement.executeUpdate();
 
         if (rowsAffected == 0) {
@@ -145,7 +165,7 @@ public class VeiculoDao implements IVeiculoDao {
             if (generatedKeys.next()) {
                 int id = generatedKeys.getInt(1);
                 
-                return new Veiculo(id, Marca, Modelo, url);
+                return new Veiculo(id, Marca, Modelo, cor, placa, url);
             } else {
                 return null;
             }

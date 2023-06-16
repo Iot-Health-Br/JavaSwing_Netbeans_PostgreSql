@@ -29,25 +29,29 @@ public class VeiculoControle implements IVeiculoControle {
         this.tableModel = tableModel;
     }
     
-    public void adicionarVeiculo(String nomeMarca, String nomeModelo, String url) {
+    @Override
+    public void adicionarVeiculo(String Marca, String Modelo, String cor,String placa, String Url) {
         
-        Veiculo veiculo = veiculoDao.adicionarVeiculo(nomeMarca, nomeModelo, url);
+        Veiculo veiculo = veiculoDao.adicionarVeiculo(Marca, Modelo, cor, placa, Url);
         
         if (veiculo != null) {
-            tableModel.addRow(new Object[]{veiculo.getId(), veiculo.getMarca(), veiculo.getModelo(), veiculo.getUrl()});
+            tableModel.addRow(new Object[]{veiculo.getId(), veiculo.getMarca(), veiculo.getModelo(),veiculo.getCor(),veiculo.getPlaca(), veiculo.getUrl()});
         } else {
             JOptionPane.showMessageDialog(null, "Erro ao adicionar o Veiculo");
         }
     }
 
-    public void atualizarVeiculo(int id, String novaMarca, String novaModelo, String novoUrl) {
+    @Override
+    public void atualizarVeiculo(int id, String novaMarca, String novaModelo, String novaCor,  String novaPlaca, String novoUrl) {
                 
-        if (veiculoDao.atualizarVeiculo(id, novaMarca, novaModelo, novoUrl )) {
+        if (veiculoDao.atualizarVeiculo(id, novaMarca, novaModelo, novaCor, novaPlaca, novoUrl )) {
             int rowIndex = getRowIndexById(id);
             if (rowIndex != -1) {
                 tableModel.setValueAt(novaMarca, rowIndex, 1);
                 tableModel.setValueAt(novaModelo, rowIndex, 2);
-                tableModel.setValueAt(novoUrl, rowIndex, 3);
+                tableModel.setValueAt(novaCor, rowIndex, 3);
+                tableModel.setValueAt(novaPlaca, rowIndex, 4);
+                tableModel.setValueAt(novoUrl, rowIndex, 5);
             }
         } else {
             JOptionPane.showMessageDialog(null, "Erro ao atualizar o Veiculo");
