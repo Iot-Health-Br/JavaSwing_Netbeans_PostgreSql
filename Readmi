@@ -49,3 +49,11 @@ tela de veiculo criada-falta implementar
 Código ok
 
 -------------------------------------------------------
+
+15-06-2023 - 6ºetapa
+
+Adicionado a tela de Veiculos
+- Cadastro de marca e modelo e url ok na tabela tabeladeveiculos
+- Ao selecionar a combobox marcas aparece os modelos
+- Ao selecionar uma linha da tabela apresenta o texto na combobox
+- Codigo funcionando
