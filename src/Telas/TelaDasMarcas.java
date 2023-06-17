@@ -81,9 +81,10 @@ public class TelaDasMarcas extends javax.swing.JFrame {
         Btn_Incluir = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
-        MenuModelos = new javax.swing.JMenu();
-        MenuVeiculos = new javax.swing.JMenu();
+        Btn_modelosTela = new javax.swing.JMenuItem();
+        Btn_veiculosTela = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
+        Btn_sair = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -141,6 +142,7 @@ public class TelaDasMarcas extends javax.swing.JFrame {
                 .addContainerGap(38, Short.MAX_VALUE))
         );
 
+        Btn_Alterar.setBackground(new java.awt.Color(255, 255, 102));
         Btn_Alterar.setText("Alterar");
         Btn_Alterar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -155,6 +157,7 @@ public class TelaDasMarcas extends javax.swing.JFrame {
 
         jLabel1.setText("Marca :");
 
+        Btn_Incluir.setBackground(new java.awt.Color(102, 255, 102));
         Btn_Incluir.setText("Incluir");
         Btn_Incluir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -252,25 +255,34 @@ public class TelaDasMarcas extends javax.swing.JFrame {
 
         jMenu1.setText("File");
 
-        MenuModelos.setText("Tela dos Modelos");
-        MenuModelos.addActionListener(new java.awt.event.ActionListener() {
+        Btn_modelosTela.setText("Tela Modelo");
+        Btn_modelosTela.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                MenuModelosActionPerformed(evt);
+                Btn_modelosTelaActionPerformed(evt);
             }
         });
-        jMenu1.add(MenuModelos);
+        jMenu1.add(Btn_modelosTela);
 
-        MenuVeiculos.setText("Tela dos Veiculos");
-        MenuVeiculos.addActionListener(new java.awt.event.ActionListener() {
+        Btn_veiculosTela.setText("Tela Veiculo");
+        Btn_veiculosTela.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                MenuVeiculosActionPerformed(evt);
+                Btn_veiculosTelaActionPerformed(evt);
             }
         });
-        jMenu1.add(MenuVeiculos);
+        jMenu1.add(Btn_veiculosTela);
 
         jMenuBar1.add(jMenu1);
 
-        jMenu2.setText("Edit");
+        jMenu2.setText("Sair");
+
+        Btn_sair.setText("Sair da Tela");
+        Btn_sair.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Btn_sairActionPerformed(evt);
+            }
+        });
+        jMenu2.add(Btn_sair);
+
         jMenuBar1.add(jMenu2);
 
         setJMenuBar(jMenuBar1);
@@ -369,29 +381,33 @@ public class TelaDasMarcas extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_Btn_IncluirActionPerformed
 
-    private void MenuModelosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuModelosActionPerformed
+    private void Btn_modelosTelaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_modelosTelaActionPerformed
         try {
-            TelaDosModelos telaModelo = new TelaDosModelos();
-            telaModelo.setLocationRelativeTo(null);
-            telaModelo.setVisible(true);
+            TelaDosModelos modelo = new TelaDosModelos();
+            modelo.setLocationRelativeTo(null);
+            modelo.setVisible(true);
             this.setVisible(false);
-            telaModelo.setResizable(false);
+            modelo.setResizable(false);
         } catch (Exception erro) {
             JOptionPane.showMessageDialog(this, erro);
         }
-    }//GEN-LAST:event_MenuModelosActionPerformed
+    }//GEN-LAST:event_Btn_modelosTelaActionPerformed
 
-    private void MenuVeiculosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuVeiculosActionPerformed
+    private void Btn_veiculosTelaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_veiculosTelaActionPerformed
         try {
-            TelaDosVeiculos telaModelo = new TelaDosVeiculos();
-            telaModelo.setLocationRelativeTo(null);
-            telaModelo.setVisible(true);
+            TelaDosVeiculos veiculo = new TelaDosVeiculos();
+            veiculo.setLocationRelativeTo(null);
+            veiculo.setVisible(true);
             this.setVisible(false);
-            telaModelo.setResizable(false);
+            veiculo.setResizable(false);
         } catch (Exception erro) {
             JOptionPane.showMessageDialog(this, erro);
         }
-    }//GEN-LAST:event_MenuVeiculosActionPerformed
+    }//GEN-LAST:event_Btn_veiculosTelaActionPerformed
+
+    private void Btn_sairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_sairActionPerformed
+        dispose();
+    }//GEN-LAST:event_Btn_sairActionPerformed
 
     
     /**
@@ -433,8 +449,9 @@ public class TelaDasMarcas extends javax.swing.JFrame {
     private javax.swing.JButton Btn_Add;
     private javax.swing.JButton Btn_Alterar;
     private javax.swing.JButton Btn_Incluir;
-    private javax.swing.JMenu MenuModelos;
-    private javax.swing.JMenu MenuVeiculos;
+    private javax.swing.JMenuItem Btn_modelosTela;
+    private javax.swing.JMenuItem Btn_sair;
+    private javax.swing.JMenuItem Btn_veiculosTela;
     private javax.swing.JLabel Panel_Logo;
     private javax.swing.JTextField Txt_Marca;
     private javax.swing.JTextField Txt_URL;

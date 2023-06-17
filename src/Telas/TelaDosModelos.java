@@ -42,7 +42,7 @@ public class TelaDosModelos extends javax.swing.JFrame {
         initComponents();
         
         // INICIA MAXIMIZADA
-        setExtendedState(TelaDasMarcas.MAXIMIZED_BOTH);
+        setExtendedState(TelaDosModelos.MAXIMIZED_BOTH);
         
         //Combobox inicializa Vazia
         Jcbx_Marcas.setSelectedIndex(-1);
@@ -133,9 +133,10 @@ public class TelaDosModelos extends javax.swing.JFrame {
         Txt_Modelos = new javax.swing.JTextField();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
-        MenuMarcas = new javax.swing.JMenu();
-        MenuVeiculos = new javax.swing.JMenu();
+        Btn_marcasTela = new javax.swing.JMenuItem();
+        Btn_veiculosTela = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
+        Btn_sair = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -193,6 +194,7 @@ public class TelaDosModelos extends javax.swing.JFrame {
                 .addContainerGap(38, Short.MAX_VALUE))
         );
 
+        Btn_Alterar.setBackground(new java.awt.Color(255, 255, 51));
         Btn_Alterar.setText("Alterar");
         Btn_Alterar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -207,6 +209,7 @@ public class TelaDosModelos extends javax.swing.JFrame {
 
         jLabel1.setText("Marca :");
 
+        Btn_Incluir.setBackground(new java.awt.Color(102, 255, 102));
         Btn_Incluir.setText("Incluir");
         Btn_Incluir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -315,25 +318,34 @@ public class TelaDosModelos extends javax.swing.JFrame {
 
         jMenu1.setText("File");
 
-        MenuMarcas.setText("Tela de Marcas");
-        MenuMarcas.addActionListener(new java.awt.event.ActionListener() {
+        Btn_marcasTela.setText("Tela Marca");
+        Btn_marcasTela.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                MenuMarcasActionPerformed(evt);
+                Btn_marcasTelaActionPerformed(evt);
             }
         });
-        jMenu1.add(MenuMarcas);
+        jMenu1.add(Btn_marcasTela);
 
-        MenuVeiculos.setText("Tela de Veiculos");
-        MenuVeiculos.addActionListener(new java.awt.event.ActionListener() {
+        Btn_veiculosTela.setText("Tela Veiculos");
+        Btn_veiculosTela.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                MenuVeiculosActionPerformed(evt);
+                Btn_veiculosTelaActionPerformed(evt);
             }
         });
-        jMenu1.add(MenuVeiculos);
+        jMenu1.add(Btn_veiculosTela);
 
         jMenuBar1.add(jMenu1);
 
-        jMenu2.setText("Edit");
+        jMenu2.setText("Sair");
+
+        Btn_sair.setText("Sair da Tela");
+        Btn_sair.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Btn_sairActionPerformed(evt);
+            }
+        });
+        jMenu2.add(Btn_sair);
+
         jMenuBar1.add(jMenu2);
 
         setJMenuBar(jMenuBar1);
@@ -434,29 +446,33 @@ public class TelaDosModelos extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_Btn_IncluirActionPerformed
 
-    private void MenuMarcasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuMarcasActionPerformed
+    private void Btn_marcasTelaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_marcasTelaActionPerformed
         try {
-            TelaDasMarcas telaModelo = new TelaDasMarcas();
-            telaModelo.setLocationRelativeTo(null);
-            telaModelo.setVisible(true);
+            TelaDasMarcas marcas = new TelaDasMarcas();
+            marcas.setLocationRelativeTo(null);
+            marcas.setVisible(true);
             this.setVisible(false);
-            telaModelo.setResizable(false);
+            marcas.setResizable(false);
         } catch (Exception erro) {
             JOptionPane.showMessageDialog(this, erro);
         }
-    }//GEN-LAST:event_MenuMarcasActionPerformed
+    }//GEN-LAST:event_Btn_marcasTelaActionPerformed
 
-    private void MenuVeiculosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuVeiculosActionPerformed
+    private void Btn_veiculosTelaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_veiculosTelaActionPerformed
         try {
-            TelaDosVeiculos telaModelo = new TelaDosVeiculos();
-            telaModelo.setLocationRelativeTo(null);
-            telaModelo.setVisible(true);
+            TelaDosVeiculos veiculo = new TelaDosVeiculos();
+            veiculo.setLocationRelativeTo(null);
+            veiculo.setVisible(true);
             this.setVisible(false);
-            telaModelo.setResizable(false);
+            veiculo.setResizable(false);
         } catch (Exception erro) {
             JOptionPane.showMessageDialog(this, erro);
         }
-    }//GEN-LAST:event_MenuVeiculosActionPerformed
+    }//GEN-LAST:event_Btn_veiculosTelaActionPerformed
+
+    private void Btn_sairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_sairActionPerformed
+        dispose();
+    }//GEN-LAST:event_Btn_sairActionPerformed
 
     
     /**
@@ -501,9 +517,10 @@ public class TelaDosModelos extends javax.swing.JFrame {
     private javax.swing.JButton Btn_Add;
     private javax.swing.JButton Btn_Alterar;
     private javax.swing.JButton Btn_Incluir;
+    private javax.swing.JMenuItem Btn_marcasTela;
+    private javax.swing.JMenuItem Btn_sair;
+    private javax.swing.JMenuItem Btn_veiculosTela;
     private javax.swing.JComboBox<String> Jcbx_Marcas;
-    private javax.swing.JMenu MenuMarcas;
-    private javax.swing.JMenu MenuVeiculos;
     private javax.swing.JLabel Panel_Logo;
     private javax.swing.JTextField Txt_Modelos;
     private javax.swing.JTextField Txt_URL;
