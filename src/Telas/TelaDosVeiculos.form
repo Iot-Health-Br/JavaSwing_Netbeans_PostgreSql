@@ -535,11 +535,11 @@
                         <Column editable="true" title="MODELO" type="java.lang.String"/>
                         <Column editable="true" title="COR" type="java.lang.String"/>
                         <Column editable="true" title="PLACA" type="java.lang.String"/>
-                        <Column editable="true" title="ANO FAB." type="java.lang.Integer"/>
-                        <Column editable="true" title="ANO MODELO" type="java.lang.Integer"/>
+                        <Column editable="true" title="ANO FAB." type="java.lang.String"/>
+                        <Column editable="true" title="ANO MODELO" type="java.lang.String"/>
                         <Column editable="true" title="COMBUSTIVEL" type="java.lang.String"/>
-                        <Column editable="true" title="KM" type="java.lang.Integer"/>
-                        <Column editable="true" title="RENAVAM" type="java.lang.Integer"/>
+                        <Column editable="true" title="KM" type="java.lang.String"/>
+                        <Column editable="true" title="RENAVAM" type="java.lang.String"/>
                         <Column editable="true" title="COMPRA" type="java.lang.String"/>
                         <Column editable="true" title="VENDA" type="java.lang.String"/>
                         <Column editable="true" title="URL" type="java.lang.String"/>

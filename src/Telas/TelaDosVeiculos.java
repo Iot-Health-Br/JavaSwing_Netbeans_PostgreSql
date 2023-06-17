@@ -54,7 +54,7 @@ public class TelaDosVeiculos extends javax.swing.JFrame {
 
         // Preencher tabela com os dados do veiculo
         for (Veiculo veiculo : veiculos) {
-            Object[] rowData = {veiculo.getId(), veiculo.getModelo(), veiculo.getMarca(), veiculo.getCor(), veiculo.getPlaca(), veiculo.getRenavam(), veiculo.getAnoFabricacao(), veiculo.getAnoModelo(),veiculo.getQuilometragem(),veiculo.getRenavam(),veiculo.getPreçoCompra(),veiculo.getPreçoVenda(), veiculo.getUrl()};
+            Object[] rowData = {veiculo.getId(), veiculo.getModelo(), veiculo.getMarca(), veiculo.getCor(), veiculo.getPlaca(), veiculo.getAnoFabricacao(), veiculo.getAnoModelo(), veiculo.getCombustivel() ,veiculo.getQuilometragem(),veiculo.getRenavam(),veiculo.getPreçoCompra(),veiculo.getPreçoVenda(), veiculo.getUrl()};
             tableModel.addRow(rowData);
         }
         
@@ -412,7 +412,7 @@ private void preencherComboBoxMarcasModelos() {
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -507,18 +507,16 @@ private void preencherComboBoxMarcasModelos() {
          if (!Txt_URL.getText().equals("")){
             
             String nomeMarca = (String) JCBX_Marca.getSelectedItem();
-            String nomeModelo = (String) JCBX_Modelo.getSelectedItem();
-            
+            String nomeModelo = (String) JCBX_Modelo.getSelectedItem();            
             String cor = Txt_Cor.getText().toUpperCase();
             String placa = Txt_Placa.getText().toUpperCase();
-            String renavam = Txt_Renavam.getText().toUpperCase();
-            String compra = Txt_PrCompra.getText().toUpperCase();
-            String venda = Txt_PrVenda.getText().toUpperCase();
             String anoFab = Txt_AnoFab.getText().toUpperCase();
             String anoModel = Txt_AnoModelo.getText().toUpperCase();
             String combustivel = (String) JCBX_Combustivel.getSelectedItem();
             String km = Txt_KM.getText().toUpperCase();
-            
+            String renavam = Txt_Renavam.getText().toUpperCase();
+            String compra = Txt_PrCompra.getText().toUpperCase().toUpperCase();;
+            String venda = Txt_PrVenda.getText().toUpperCase().toUpperCase();;   
             String url = Txt_URL.getText();
 
             IVeiculoDao veiculoDao = new VeiculoDao();
@@ -533,16 +531,23 @@ private void preencherComboBoxMarcasModelos() {
     private void Btn_AlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_AlterarActionPerformed
         if (!Txt_URL.getText().equals("")){
             String nomeMarca = (String) JCBX_Marca.getSelectedItem();
-            String nomeModelo = (String) JCBX_Modelo.getSelectedItem();
+            String nomeModelo = (String) JCBX_Modelo.getSelectedItem();            
             String cor = Txt_Cor.getText().toUpperCase();
             String placa = Txt_Placa.getText().toUpperCase();
+            String anoFab = Txt_AnoFab.getText().toUpperCase();
+            String anoModel = Txt_AnoModelo.getText().toUpperCase();
+            String combustivel = (String) JCBX_Combustivel.getSelectedItem();
+            String km = Txt_KM.getText().toUpperCase();
+            String renavam = Txt_Renavam.getText().toUpperCase();
+            String compra = Txt_PrCompra.getText().toUpperCase().toUpperCase();;
+            String venda = Txt_PrVenda.getText().toUpperCase().toUpperCase();;   
             String url = Txt_URL.getText();
 
             int selectedRow = tabelaVeiculos.getSelectedRow();
             if (selectedRow != -1) {
                 int idMarca = (int) tabelaVeiculos.getValueAt(selectedRow, 0);
                 IVeiculoControle atualiza = new VeiculoControle(new VeiculoDao(), (DefaultTableModel) tabelaVeiculos.getModel());
-                atualiza.atualizarVeiculo(idMarca, nomeMarca, nomeModelo,cor, placa, url);
+                atualiza.atualizarVeiculo(idMarca, nomeMarca, nomeModelo, cor, placa, anoFab, anoModel, combustivel, km, renavam, compra, venda, url);
             }
         }
         else{
@@ -578,6 +583,9 @@ private void preencherComboBoxMarcasModelos() {
 
                 String modeloSelecionado = (String) tabelaVeiculos.getValueAt(selectedRow, 2);
                 JCBX_Modelo.setSelectedItem(modeloSelecionado); // Define o valor selecionado na combobox de modelos
+                
+                String combustivel = (String) tabelaVeiculos.getValueAt(selectedRow, 7);
+                JCBX_Combustivel.setSelectedItem(combustivel); // Define o valor selecionado na combobox de modelos
             }
 
         try {
@@ -591,9 +599,32 @@ private void preencherComboBoxMarcasModelos() {
             Txt_Cor.setText(cor);
             
             String placa = (String) this.tabelaVeiculos.getValueAt(tabelaVeiculos.getSelectedRow(), 4);
-            Txt_Placa.setText(placa);           
+            Txt_Placa.setText(placa);
             
-            String nomeDoArquivo = (String) this.tabelaVeiculos.getValueAt(tabelaVeiculos.getSelectedRow(), 5);
+            
+            Integer anofabInt = (Integer) this.tabelaVeiculos.getValueAt(tabelaVeiculos.getSelectedRow(), 5);
+            String anofab = anofabInt.toString();
+            Txt_AnoFab.setText(anofab);
+            
+            Integer anomodelInt = (Integer) this.tabelaVeiculos.getValueAt(tabelaVeiculos.getSelectedRow(), 6);
+            String anomodel = anomodelInt.toString();
+            Txt_AnoModelo.setText(anomodel);
+            
+            Integer kmint = (Integer) this.tabelaVeiculos.getValueAt(tabelaVeiculos.getSelectedRow(), 8);
+            String km = kmint.toString();
+            Txt_KM.setText(km);           
+            
+            Integer Renavamint = (Integer) this.tabelaVeiculos.getValueAt(tabelaVeiculos.getSelectedRow(), 9);
+            String Renavam = Renavamint.toString();
+            Txt_Renavam.setText(Renavam);
+            
+            String compra = (String) this.tabelaVeiculos.getValueAt(tabelaVeiculos.getSelectedRow(), 10);
+            Txt_PrCompra.setText(compra);
+            
+            String venda = (String) this.tabelaVeiculos.getValueAt(tabelaVeiculos.getSelectedRow(), 11);
+            Txt_PrVenda.setText(venda);           
+            
+            String nomeDoArquivo = (String) this.tabelaVeiculos.getValueAt(tabelaVeiculos.getSelectedRow(), 12);
             Txt_URL.setText(nomeDoArquivo);
             
             ImageIcon iconLogo = new ImageIcon(nomeDoArquivo);

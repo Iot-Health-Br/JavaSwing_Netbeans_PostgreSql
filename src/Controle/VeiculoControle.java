@@ -40,30 +40,43 @@ public class VeiculoControle implements IVeiculoControle {
         Veiculo veiculo = veiculoDao.adicionarVeiculo(Marca, Modelo, cor, placa, novofab, novomodelo, combustivel, novomKm, novoRenavam, compra, venda, Url);
         
         if (veiculo != null) {
-            tableModel.addRow(new Object[]{veiculo.getId(), veiculo.getMarca(), veiculo.getModelo(),veiculo.getCor(),veiculo.getPlaca(),veiculo.getAnoFabricacao(),veiculo.getAnoModelo(),veiculo.getCombustivel(), veiculo.getQuilometragem(),veiculo.getRenavam(),veiculo.getPreçoCompra(),veiculo.getPreçoVenda(), veiculo.getUrl()});
+            tableModel.addRow(new Object[]{veiculo.getId(), veiculo.getModelo(), veiculo.getMarca(),veiculo.getCor(),veiculo.getPlaca(),veiculo.getAnoFabricacao(),veiculo.getAnoModelo(),veiculo.getCombustivel(), veiculo.getQuilometragem(),veiculo.getRenavam(),veiculo.getPreçoCompra(),veiculo.getPreçoVenda(), veiculo.getUrl()});
         } else {
             JOptionPane.showMessageDialog(null, "Erro ao adicionar o Veiculo");
         }
     }
 
     @Override
-    public void atualizarVeiculo(int id, String novaMarca, String novaModelo, String novaCor,  String novaPlaca, String novoUrl) {
-                
-        if (veiculoDao.atualizarVeiculo(id, novaMarca, novaModelo, novaCor, novaPlaca, novoUrl )) {
+    public void atualizarVeiculo(int id, String novaMarca, String novoModelo, String novaCor, String novaPlaca, String anofab, String anoModelo, String novoCombustivel,String novoKm, String novoRenavam, String novoCompra, String novoVenda, String novoUrl) {
+         int novofab = Integer.parseInt(anofab); // Conversão de String para int
+         int novomodelo = Integer.parseInt(anoModelo); // Conversão de String para int
+         int Km = Integer.parseInt(novoKm); // Conversão de String para int
+         int Renavam = Integer.parseInt(novoRenavam); // Conversão de String para int       
+        
+        
+        if (veiculoDao.atualizarVeiculo(id, novaMarca, novoModelo, novaCor, novaPlaca, novofab, novomodelo, novoCombustivel, Km, Renavam, novoCompra, novoVenda, novoUrl )) {
             int rowIndex = getRowIndexById(id);
             if (rowIndex != -1) {
                 tableModel.setValueAt(novaMarca, rowIndex, 1);
-                tableModel.setValueAt(novaModelo, rowIndex, 2);
+                tableModel.setValueAt(novoModelo, rowIndex, 2);
                 tableModel.setValueAt(novaCor, rowIndex, 3);
-                tableModel.setValueAt(novaPlaca, rowIndex, 4);
-                tableModel.setValueAt(novoUrl, rowIndex, 5);
+                tableModel.setValueAt(novaPlaca, rowIndex, 4);               
+                tableModel.setValueAt(anofab, rowIndex, 5);
+                tableModel.setValueAt(anoModelo, rowIndex, 6);
+                tableModel.setValueAt(novoCombustivel, rowIndex, 7);
+                tableModel.setValueAt(novoKm, rowIndex, 8);
+                tableModel.setValueAt(novoRenavam, rowIndex, 9);
+                tableModel.setValueAt(novoCompra, rowIndex, 10);
+                tableModel.setValueAt(novoVenda, rowIndex, 11);               
+                tableModel.setValueAt(novoUrl, rowIndex, 12);
             }
-        } else {
+        } 
+        else {
             JOptionPane.showMessageDialog(null, "Erro ao atualizar o Veiculo");
         }
     }    
       
-        private int getRowIndexById(int id) {
+    private int getRowIndexById(int id) {
         for (int i = 0; i < tableModel.getRowCount(); i++) {
             int rowId = (int) tableModel.getValueAt(i, 0);
             if (rowId == id) {
@@ -72,4 +85,5 @@ public class VeiculoControle implements IVeiculoControle {
         }
         return -1;
     }
+    
 }

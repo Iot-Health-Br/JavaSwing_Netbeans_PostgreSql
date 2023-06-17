@@ -55,7 +55,7 @@ public class VeiculoDao implements IVeiculoDao {
     private void criarTabela() {
         try (Connection conexao = DatabaseConnection.getConnection();
              Statement statement = conexao.createStatement()) {
-             String query = String.format("CREATE TABLE IF NOT EXISTS %s (%s SERIAL PRIMARY KEY, %s VARCHAR(50), %s VARCHAR(50), %s VARCHAR(50), %s VARCHAR(7), %s INTEGER, %s INTEGER, %s VARCHAR(10), %s INTEGER, %s INTEGER, %s VARCHAR(50), %s VARCHAR(50),%s VARCHAR(100))",
+             String query = String.format("CREATE TABLE IF NOT EXISTS %s (%s SERIAL PRIMARY KEY, %s VARCHAR(50), %s VARCHAR(50), %s VARCHAR(50), %s VARCHAR(8), %s INTEGER, %s INTEGER, %s VARCHAR(10), %s INTEGER, %s INTEGER, %s VARCHAR(50), %s VARCHAR(50),%s VARCHAR(100))",
         TABELA_VEICULOS, COLUNA_ID, COLUNA_MARCAS, COLUNA_MODELOS, COLUNA_COR, COLUNA_PLACA, COLUNA_ANOFAB, COLUNA_ANOMODELO,COLUNA_COMBUSTIVEL,COLUNA_KM, COLUNA_RENAVAM,COLUNA_COMPRA, COLUNA_VENDA, COLUNA_URL);
             statement.executeUpdate(query);
         } 
@@ -107,16 +107,25 @@ public class VeiculoDao implements IVeiculoDao {
         return veiculos;
     }
     
-    public boolean atualizarVeiculo(int id, String novaMarca, String novaModelo, String novaCor, String novaPlaca, String novaUrl) {
+    public boolean atualizarVeiculo(int id, String novaMarca, String novoModelo, String novaCor, String novaPlaca, int novafab, int novoModel,String novoCombustivel,int novokm, int novoRenavam, String novaCompra, String novaVenda, String novoUrl) {
         try (Connection conexao = DatabaseConnection.getConnection();
             PreparedStatement statement = conexao.prepareStatement(
- String.format("UPDATE %s SET %s = ?, %s = ?, %s = ?, %s = ?, %s = ? WHERE %s = ?", TABELA_VEICULOS, COLUNA_MARCAS, COLUNA_MODELOS, COLUNA_COR, COLUNA_PLACA, COLUNA_URL, COLUNA_ID))) {
+ String.format("UPDATE %s SET %s = ?, %s = ?, %s = ?, %s = ?,%s = ?, %s = ?, %s = ?, %s = ?,%s = ?, %s = ?, %s = ?, %s = ? WHERE %s = ?", TABELA_VEICULOS, COLUNA_MARCAS, COLUNA_MODELOS, COLUNA_COR, COLUNA_PLACA, COLUNA_ANOFAB, COLUNA_ANOMODELO, COLUNA_COMBUSTIVEL, COLUNA_KM, COLUNA_RENAVAM, COLUNA_COMPRA, COLUNA_VENDA, COLUNA_URL, COLUNA_ID))) {
             statement.setString(1, novaMarca);
-            statement.setString(2, novaModelo);
+            statement.setString(2, novoModelo);
             statement.setString(3, novaCor);
             statement.setString(4, novaPlaca);
-            statement.setString(5, novaUrl);
-            statement.setInt(6, id);
+            
+            statement.setInt(5, novafab);
+            statement.setInt(6, novoModel);
+            statement.setString(7, novoCombustivel);
+            statement.setInt(8, novokm);
+            statement.setInt(9, novoRenavam);
+            statement.setString(10, novaCompra);
+            statement.setString(11, novaVenda);
+         
+            statement.setString(12, novoUrl);
+            statement.setInt(13, id);
                        
             int rowsAffected = statement.executeUpdate();
             return rowsAffected > 0;
